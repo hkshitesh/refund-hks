@@ -1,8 +1,8 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Image 
 
 on:
   push:
-    branches: [ "main" ]   # Runs when pushing to main branch
+    branches: [ "main" ]   # Runs when pushing to main branch yes
 
 jobs:
   build-and-push:
