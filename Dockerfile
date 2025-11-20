@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk
 
 # Create app directory
 WORKDIR /app
