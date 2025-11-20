@@ -1,13 +1,5 @@
-FROM openjdk
-
-# Create app directory
-WORKDIR /app
-
-# Copy the JAR file built by Maven
-COPY target/refunds-api-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose application port
+FROM eclipse-temurin:17-jre-jammy
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 EXPOSE 8080
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
