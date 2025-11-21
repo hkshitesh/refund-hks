@@ -1,4 +1,4 @@
-name: Run Postman (Newman) Tests
+name: Run Postman (Newman) Test
 
 on:
   workflow_dispatch:
