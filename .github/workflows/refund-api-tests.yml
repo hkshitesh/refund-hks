@@ -1,4 +1,4 @@
-name: Run Postman (Newman) Test
+name: Run Postman (Newman) Tests
 
 on:
   workflow_dispatch:
@@ -12,57 +12,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ---------------------------
-      # Checkout Code
-      # ---------------------------
+      # Checkout
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # ---------------------------
-      # Setup Java for Spring Boot
-      # ---------------------------
+      # Setup Java
       - name: Setup Java 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      # ---------------------------
-      # Build Spring Boot Project
-      # ---------------------------
+      # Build Spring Boot JAR
       - name: Build Spring Boot Project
         run: mvn clean package -DskipTests
 
-      # ---------------------------
       # Start API Server
-      # ---------------------------
       - name: Start API Server
         run: |
           nohup java -jar target/*.jar > app.log 2>&1 &
           sleep 10
 
-      # ---------------------------
-      # Install Newman + HTML Extra
-      # ---------------------------
+      # Install Newman + Reporter
       - name: Install Newman
         run: |
           npm install -g newman
           npm install -g newman-reporter-htmlextra
 
-      # ---------------------------
-      # Run Postman Collection
-      # ---------------------------
+      # Run API Tests
       - name: Run Newman Tests
         run: |
           newman run postman/seb-refunds-collection.postman_collection.json \
             -r htmlextra \
             --reporter-htmlextra-export newman-report.html
 
-      # ---------------------------
-      # Upload Report
-      # ---------------------------
+      # Upload Report (UPDATED TO v4)
       - name: Upload Newman Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: newman-report
           path: newman-report.html
